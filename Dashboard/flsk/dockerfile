@@ -1,0 +1,10 @@
+FROM python:3.6-alpine3.8
+
+COPY . .
+RUN apk add --no-cache --virtual .build-deps gcc libc-dev \
+  && pip install --upgrade pip \
+  && pip install -r requirements
+
+EXPOSE 8000
+
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "server:app"]
